@@ -5,7 +5,7 @@
 # Description:  TODO: (write me)
 # Version:      0.0.0.000
 # Created:      2016-05-10 13:01:26
-# Modified:     2016-05-11 06:58:13
+# Modified:     2016-05-11 07:01:26
 # Author:       Mickael Temporão < mickael.temporao.1 at ulaval.ca >
 # ------------------------------------------------------------------------------
 # Copyright (C) 2016 Mickael Temporão
@@ -20,9 +20,9 @@ db <- read.csv('data/2012_qc_fb_posts.csv', stringsAsFactors=F) %>%
 #1 Number of Posts (Official vs Non-Official) by Party
 plot1 <- db %>% dplyr::count(page_id, official)
 ggplot(plot1, aes(x=page_id, y=n, fill=factor(official)))+
-  geom_bar(stat='identity', position='dodge') +
+  geom_bar(stat='identity') +
   scale_x_discrete(labels=c("coalitionavenir"="CAQ","lepartiquebecois"="PQ","LiberalQuebec"="PLQ",
     "OptionNationale.QC"="ON","partivert"="PVQ","Quebecsolidaire"="QS")) +
-  coord_flip()
+  theme_bw()
 
 plot2 <- db %>% dplyr::count(page_id, NEGATIVE)
