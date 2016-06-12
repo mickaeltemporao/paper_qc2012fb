@@ -5,7 +5,7 @@
 # Description:  Preprocess Data for QC 2012 FB Analysis
 # Version:      0.0.0.000
 # Created:      2016-04-20 15:29:26
-# Modified:     2016-05-10 15:57:54
+# Modified:     2016-06-12 14:48:01
 # Author:       Mickael Temporão < mickael.temporao.1 at ulaval.ca >
 # ------------------------------------------------------------------------------
 # Copyright (C) 2016 Mickael Temporão
@@ -34,16 +34,16 @@ mv_lowercase <- function(x){
 
 # Preprocess ------------------------------------------------------------------
 
-# Official Posts by Parties - Official=1; Non-Official=0
-posts$official <- 0
-posts$official[posts$user__username==posts$ffrom__username] <- 1
+# Primary Posts by Parties - Primary =1; Secondary =0
+posts$primary <- 0
+posts$primary[posts$user__username==posts$ffrom__username] <- 1
 
 # Keep only required variables and posts on 6 majors FB Pages
 posts <- posts %>%
   dplyr::filter(user__username %in% c("coalitionavenir", "LiberalQuebec", "OptionNationale.QC",
     "lepartiquebecois", "partivert", "Quebecsolidaire")) %>%
   dplyr::select(user__name, user__username, ffrom__name, ffrom__username, ffrom__gender, message,
-    official, picture, link, ftype, likes_count, comments_count, shares_count) %>%
+    primary, picture, link, ftype, likes_count, comments_count, shares_count) %>%
   dplyr::filter(message!="None") %>% rename(page=user__name, page_id=user__username,
     from=ffrom__name, from_id=ffrom__username, gender=ffrom__gender, type=ftype)
 posts$message <- mv_lowercase(posts$message)
@@ -93,4 +93,4 @@ topfeatures(qc_dfm, 5)
 df_sent <- as.data.frame(qc_dfm)
 
 posts <- posts %>% bind_cols(df_sent)
-write.csv(posts, 'data/2012_qc_fb_posts.csv')
+write.csv(posts, 'data/2012_qc_fb_posts.csv', row.names=F)
