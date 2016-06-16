@@ -5,7 +5,7 @@
 # Description:  Preprocess Data for QC 2012 FB Analysis
 # Version:      0.0.0.000
 # Created:      2016-04-20 15:29:26
-# Modified:     2016-06-12 14:48:01
+# Modified:     2016-06-16 16:50:55
 # Author:       Mickael Temporão < mickael.temporao.1 at ulaval.ca >
 # ------------------------------------------------------------------------------
 # Copyright (C) 2016 Mickael Temporão
@@ -13,7 +13,7 @@
 # ------------------------------------------------------------------------------
 library(dplyr)
 
-path <- "../../../../../grcp/web/aspira/Elections_qc_2012_fb/Elections_Quebec_2012_FBPosts.csv"
+path <- "../../../../grcp/web/aspira/Elections_qc_2012_fb/Elections_Quebec_2012_FBPosts.csv"
 posts <- read.csv(path, encoding='UTF-8', stringsAsFactors=F, na.strings="None", sep=',')
 
 # Functions -------------------------------------------------------------------
@@ -93,4 +93,6 @@ topfeatures(qc_dfm, 5)
 df_sent <- as.data.frame(qc_dfm)
 
 posts <- posts %>% bind_cols(df_sent)
+topic_none <- posts %>% select(contains('topic')) %>% mutate(topic_none = ifelse(rowSums(.) == 0, 1, 0)) %>% select(topic_none)
+posts <- bind_cols(posts, topic_none)
 write.csv(posts, 'data/2012_qc_fb_posts.csv', row.names=F)

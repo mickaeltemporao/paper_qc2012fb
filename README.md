@@ -22,5 +22,6 @@
 
 5. What did you find?
 
+    - Y(Likes & Count) ~ Topic + Tone + Media | + Time + Party
     - Tester différences |e| communications 1) primaires & 2) secondaires
     - Tester Variation du ton entre 1 et 2
