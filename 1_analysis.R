@@ -5,7 +5,7 @@
 # Description:  TODO: (write me)
 # Version:      0.0.0.000
 # Created:      2016-05-10 13:01:26
-# Modified:     2016-06-16 17:47:34
+# Modified:     2016-06-18 12:01:02
 # Author:       Mickael Temporão < mickael.temporao.1 at ulaval.ca >
 # ------------------------------------------------------------------------------
 # Copyright (C) 2016 Mickael Temporão
@@ -136,5 +136,5 @@ d <- within(d, page_id <- relevel(page_id, ref = 'PQ'))
 d$type <- factor(d$type)
 d <- within(d, type <- relevel(type, ref = 'status'))
 
-likes <- lm(likes_count ~ .-shares_count-comments_count, data=d)
-comments <- lm(comments_count ~ .-shares_count-likes_count, data=d)
+likes <- lm(likes_count ~ sentiment + type + topic + page_id, data=d)
+comments <- lm(comments_count ~ sentiment + type + topic + page_id, data=d)
