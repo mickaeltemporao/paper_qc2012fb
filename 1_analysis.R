@@ -5,7 +5,7 @@
 # Description:  TODO: (write me)
 # Version:      0.0.0.000
 # Created:      2016-05-10 13:01:26
-# Modified:     2016-06-18 12:01:02
+# Modified:     2016-06-20 22:11:07
 # Author:       Mickael Temporão < mickael.temporao.1 at ulaval.ca >
 # ------------------------------------------------------------------------------
 # Copyright (C) 2016 Mickael Temporão
@@ -114,7 +114,7 @@ plot7 <- db %>% filter(primary == 1) %>% filter(type !='swf') %>%
   select(page_id, type) %>% group_by(page_id, type) %>%
   summarise(n = n()) %>% mutate(freq = round(n/sum(n),2))
 
-ggplot(plot6, aes(x=page_id, y =freq, fill=type)) +
+ggplot(plot7, aes(x=page_id, y =freq, fill=type)) +
   geom_bar(stat='identity', position = 'dodge') +
   xlab('') + ylab('%') +
   geom_text(aes(label=paste0(round(freq*100,2), '%')),
@@ -130,6 +130,7 @@ d <- db %>% select(page_id, sentiment, primary, contains('topic'), type, page_id
 d[is.na(d)] <- NA
 d$topic <- gsub('topic_', '', d$topic)
 d$topic <- factor(d$topic)
+
 d <- within(d, topic <- relevel(topic, ref = 'none'))
 d$page_id <- factor(d$page_id)
 d <- within(d, page_id <- relevel(page_id, ref = 'PQ'))
